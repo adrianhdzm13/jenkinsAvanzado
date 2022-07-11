@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    //{ label 'master'}
+
+        stages {
+ 
+            stage ('test') {
+                steps {
+                  dir("build_java"){
+                        sh "mvn clean compile test"
+                  }
+                   
+                   
+                }
+            }
+
+            stage ('Build application') {
+                steps {
+                    dir("build_java"){
+
+                        echo "mvn -f pom.xml clean install -Dmaven.test.skip=true"
+                        echo "tree"
+                    }   
+                }
+            }
+  
+            stage ('Create docker image') {
+                steps {
+                 echo "creando docker"
+                }
+
+            }
+        }
+}
